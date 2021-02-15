@@ -41,7 +41,5 @@ public class MainDriver {
         System.out.println("Will be updating");
         temperatureStation.setTemperatures(10);
         System.out.println();
-
-        
     }
 }
