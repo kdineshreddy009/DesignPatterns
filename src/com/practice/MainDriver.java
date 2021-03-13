@@ -6,6 +6,10 @@ import com.practice.behavioral.object.TemperatureStation;
 import com.practice.behavioral.strategy.Animal;
 import com.practice.behavioral.strategy.Bird;
 import com.practice.behavioral.strategy.Dog;
+import com.practice.creational.classCreational.factory.Pet;
+import com.practice.creational.classCreational.factory.PetFactory;
+import com.practice.creational.objectCreational.abstractFactory.Car;
+import com.practice.creational.objectCreational.abstractFactory.CarType;
 
 public class MainDriver {
 
@@ -40,6 +44,28 @@ public class MainDriver {
         temperatureStation.addObserver(tc2);
         System.out.println("Will be updating");
         temperatureStation.setTemperatures(10);
+        System.out.println();
+
+
+        /*classCreational.factory -
+        There can be various subclasses, Factory class can help you instantiate a required subclass
+        */
+        System.out.println("---classCreational.factory---");
+        PetFactory petFactory = new PetFactory();
+        Pet pet = petFactory.getPetBySound("bow bow");
+        System.out.println(pet.getSound());
+        System.out.println();
+
+        /* Objectcreational.abstractfactory - this provides method which provides an object(required "Car" type object)
+        which in-turn consists of generic things
+        (can be varied from Object to other object, say engine/wheels/body here)
+        * */
+        System.out.println("---objectCreational.abstractfactory---");
+        CarType carType = new CarType();
+        Car car = carType.getCar("Tesla");
+        System.out.println(car.getEngine().getSpecification());
+        System.out.println(car.getBody().getSpecification());
+        System.out.println(car.getWheels().getSpecification());
         System.out.println();
     }
 }
