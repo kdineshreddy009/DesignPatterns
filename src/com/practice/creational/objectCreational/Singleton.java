@@ -1,4 +1,4 @@
-package com.practice.creational;
+package com.practice.creational.objectCreational;
 
 public class Singleton {
     private static Singleton instance;

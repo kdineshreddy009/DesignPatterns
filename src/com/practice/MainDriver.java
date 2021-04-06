@@ -10,6 +10,12 @@ import com.practice.creational.classCreational.factory.Pet;
 import com.practice.creational.classCreational.factory.PetFactory;
 import com.practice.creational.objectCreational.abstractFactory.Car;
 import com.practice.creational.objectCreational.abstractFactory.CarType;
+import com.practice.creational.objectCreational.builder.CivilEngineer;
+import com.practice.creational.objectCreational.builder.HouseBuilder;
+import com.practice.creational.objectCreational.builder.IglooHouseBuilder;
+import com.practice.creational.objectCreational.prototype.CloneFactory;
+import com.practice.creational.objectCreational.prototype.Hen;
+import com.practice.creational.objectCreational.prototype.Sheep;
 
 public class MainDriver {
 
@@ -67,5 +73,49 @@ public class MainDriver {
         System.out.println(car.getBody().getSpecification());
         System.out.println(car.getWheels().getSpecification());
         System.out.println();
+
+        /* objectCreational.builder - https://www.geeksforgeeks.org/builder-design-pattern/
+           Product - house
+           Builder - HouseBuilder
+           ConcreteBuilders - Igloo,Tipi
+           Director - civil engg.
+        * */
+        // Builder class impl
+        System.out.println("---objectCreational.builder---");
+        HouseBuilder iglooBuilder = new IglooHouseBuilder();
+        CivilEngineer civilEngineer = new CivilEngineer(iglooBuilder);
+        civilEngineer.constructHouse();
+        civilEngineer.getHouse();
+        System.out.println();
+
+        /*objectCreational.prototype
+        * */
+        System.out.println("---objectCreational.prototype---");
+        CloneFactory animalMaker = new CloneFactory();
+        // Sheep clone
+        Sheep jerry = new Sheep();
+        Sheep clonedSheep = null;
+        try{
+            clonedSheep = (Sheep) animalMaker.getClone(jerry);
+        }
+        catch(CloneNotSupportedException e){
+            System.out.println("Failed sheep Cloning from Driver");
+        }
+        System.out.println("jerry HashCode: " + System.identityHashCode(System.identityHashCode(jerry)));
+        System.out.println("Cloned jerry HashCode: " + System.identityHashCode(System.identityHashCode(clonedSheep)));
+
+        // Hen Clone
+        Hen lilly = new Hen();
+        Hen clonedHen = null;
+        try{
+            clonedHen = (Hen) animalMaker.getClone(lilly);
+        }
+        catch(CloneNotSupportedException e){
+            System.out.println("Failed hen Cloning from Driver");
+        }
+        System.out.println("lilly HashCode: " + System.identityHashCode(System.identityHashCode(lilly)));
+        System.out.println("Clone lilly  HashCode: " + System.identityHashCode(System.identityHashCode(clonedSheep)));
+        System.out.println();
+
     }
 }
