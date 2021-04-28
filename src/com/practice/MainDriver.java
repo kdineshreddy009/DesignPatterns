@@ -1,5 +1,6 @@
 package com.practice;
 
+import com.practice.behavioral.command.*;
 import com.practice.behavioral.object.TemperatureCustomer1;
 import com.practice.behavioral.object.TemperatureCustomer2;
 import com.practice.behavioral.object.TemperatureStation;
@@ -16,6 +17,14 @@ import com.practice.creational.objectCreational.builder.IglooHouseBuilder;
 import com.practice.creational.objectCreational.prototype.CloneFactory;
 import com.practice.creational.objectCreational.prototype.Hen;
 import com.practice.creational.objectCreational.prototype.Sheep;
+import com.practice.structural.adapter.BirdAdapter;
+import com.practice.structural.adapter.PlasticToyDuck;
+import com.practice.structural.adapter.Sparrow;
+import com.practice.structural.adapter.ToyDuck;
+import com.practice.structural.decorator.ColorDecorator;
+import com.practice.structural.decorator.House;
+import com.practice.structural.decorator.LightDecorator;
+import com.practice.structural.decorator.SimpleHouse;
 
 public class MainDriver {
 
@@ -89,16 +98,16 @@ public class MainDriver {
         System.out.println();
 
         /*objectCreational.prototype
+        http://www.newthinktank.com/2012/09/prototype-design-pattern-tutorial/
         * */
         System.out.println("---objectCreational.prototype---");
         CloneFactory animalMaker = new CloneFactory();
         // Sheep clone
         Sheep jerry = new Sheep();
         Sheep clonedSheep = null;
-        try{
+        try {
             clonedSheep = (Sheep) animalMaker.getClone(jerry);
-        }
-        catch(CloneNotSupportedException e){
+        } catch (CloneNotSupportedException e) {
             System.out.println("Failed sheep Cloning from Driver");
         }
         System.out.println("jerry HashCode: " + System.identityHashCode(System.identityHashCode(jerry)));
@@ -107,14 +116,55 @@ public class MainDriver {
         // Hen Clone
         Hen lilly = new Hen();
         Hen clonedHen = null;
-        try{
+        try {
             clonedHen = (Hen) animalMaker.getClone(lilly);
-        }
-        catch(CloneNotSupportedException e){
+        } catch (CloneNotSupportedException e) {
             System.out.println("Failed hen Cloning from Driver");
         }
         System.out.println("lilly HashCode: " + System.identityHashCode(System.identityHashCode(lilly)));
         System.out.println("Clone lilly  HashCode: " + System.identityHashCode(System.identityHashCode(clonedSheep)));
+        System.out.println();
+
+        /*behavioral.decorator - peeling DPs */
+        System.out.println("---behavioral.decorator---");
+        House house = new LightDecorator(new ColorDecorator(new SimpleHouse()));
+        System.out.println(house.makeHouse());
+        System.out.println();
+
+        // https://www.geeksforgeeks.org/command-pattern/
+        System.out.println("---behavioral.command---");
+        SimpleRemoteControl remote = new SimpleRemoteControl();
+        Light light = new Light();
+        StereoMusic stereoMusic = new StereoMusic();
+        remote.setCommand(new LightOnCommand(light));
+        remote.buttonWasPressed();
+        remote.setCommand(new StereoOnWithCDCommand(stereoMusic));
+        remote.buttonWasPressed();
+        System.out.println();
+
+        /*Suppose you have a Bird class with fly() , and makeSound()methods. And also a ToyDuck class with squeak() method.
+
+        Let’s assume that you are short on ToyDuck objects and you would like to use Bird objects in their place.
+        Birds have some similar functionality but implement a different interface, so we can’t use them directly.
+         So we will use adapter pattern. Here our client would be ToyDuck and adaptee would be Bird.
+
+         https://www.geeksforgeeks.org/adapter-pattern/
+         class BirdAdapter implements ToyDuck  -- You need to implement the interface your client expects to use.
+        */
+        System.out.println("---structural.adapter---");
+        Sparrow sparrow = new Sparrow();
+        ToyDuck toyDuck = new PlasticToyDuck();
+        // Wrap a bird in a birdAdapter so that it
+        // behaves like toy duck
+        ToyDuck birdAdapter = new BirdAdapter(sparrow);
+        System.out.println("Sparrow...");
+        sparrow.fly();
+        sparrow.makeSound();
+        System.out.println("ToyDuck...");
+        toyDuck.squeak();
+        // toy duck behaving like a bird
+        System.out.println("BirdAdapter...");
+        birdAdapter.squeak();
         System.out.println();
 
     }
