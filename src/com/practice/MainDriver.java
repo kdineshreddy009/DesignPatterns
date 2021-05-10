@@ -7,6 +7,9 @@ import com.practice.behavioral.object.TemperatureStation;
 import com.practice.behavioral.strategy.Animal;
 import com.practice.behavioral.strategy.Bird;
 import com.practice.behavioral.strategy.Dog;
+import com.practice.behavioral.template.KFCLunch;
+import com.practice.behavioral.template.Lunch;
+import com.practice.behavioral.template.McDonaldLunch;
 import com.practice.creational.classCreational.factory.Pet;
 import com.practice.creational.classCreational.factory.PetFactory;
 import com.practice.creational.objectCreational.abstractFactory.Car;
@@ -21,10 +24,12 @@ import com.practice.structural.adapter.BirdAdapter;
 import com.practice.structural.adapter.PlasticToyDuck;
 import com.practice.structural.adapter.Sparrow;
 import com.practice.structural.adapter.ToyDuck;
+import com.practice.structural.bridge.*;
 import com.practice.structural.decorator.ColorDecorator;
 import com.practice.structural.decorator.House;
 import com.practice.structural.decorator.LightDecorator;
 import com.practice.structural.decorator.SimpleHouse;
+import com.practice.structural.facade.MyGUI;
 
 public class MainDriver {
 
@@ -167,5 +172,46 @@ public class MainDriver {
         birdAdapter.squeak();
         System.out.println();
 
+        // reference Peeling design patterns
+        System.out.println("structual.facade");
+        MyGUI myGui = new MyGUI();
+        myGui.drawGUI();
+
+        /*bridge pattern - Used when we have hierarchies both in interfaces & implementations,
+                           It decouples abstraction from its implementation.
+                           ref: https://www.youtube.com/watch?v=1HL0V7vz5mA
+        */
+        System.out.println("---structural.bridge---");
+        TV sonyTVWithOldRemote = new SonyTV(new OldRemote());
+        sonyTVWithOldRemote.on();
+        sonyTVWithOldRemote.off();
+
+        TV sonyTVWithNewRemote = new SonyTV(new NewRemote());
+        sonyTVWithNewRemote.on();
+        sonyTVWithNewRemote.off();
+
+        TV MiTVWithOldRemote = new MiTV(new OldRemote());
+        MiTVWithOldRemote.on();
+        MiTVWithOldRemote.off();
+
+        TV MiTVWithNewRemote = new MiTV(new NewRemote());
+        MiTVWithNewRemote.on();
+        MiTVWithNewRemote.off();
+        System.out.println();
+
+        /* template method pattern - ref from PD book; implements the algorithm differently with subclasses
+        * */
+        System.out.println("---behavioral.template---");
+        System.out.println("---McD lunch---");
+        Lunch lunch1 = new McDonaldLunch();
+        lunch1.prepareLunch();
+        System.out.println("---KFC lunch---");
+        Lunch lunch2 = new KFCLunch();
+        lunch2.prepareLunch();
+        System.out.println();
+
+        
+        // iterator, composite, flyweight, state, proxy, chain of responsibility, interpreter, mediator,vistor
+        // https://www.youtube.com/watch?v=wiQdrH2YpT4&list=PLF206E906175C7E07&index=5
     }
 }
