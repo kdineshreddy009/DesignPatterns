@@ -1,6 +1,8 @@
 package com.practice;
 
 import com.practice.behavioral.command.*;
+import com.practice.behavioral.iterator.Item;
+import com.practice.behavioral.iterator.Menu;
 import com.practice.behavioral.object.TemperatureCustomer1;
 import com.practice.behavioral.object.TemperatureCustomer2;
 import com.practice.behavioral.object.TemperatureStation;
@@ -30,6 +32,8 @@ import com.practice.structural.decorator.House;
 import com.practice.structural.decorator.LightDecorator;
 import com.practice.structural.decorator.SimpleHouse;
 import com.practice.structural.facade.MyGUI;
+
+import java.util.Iterator;
 
 public class MainDriver {
 
@@ -200,7 +204,7 @@ public class MainDriver {
         System.out.println();
 
         /* template method pattern - ref from PD book; implements the algorithm differently with subclasses
-        * */
+         * */
         System.out.println("---behavioral.template---");
         System.out.println("---McD lunch---");
         Lunch lunch1 = new McDonaldLunch();
@@ -210,8 +214,39 @@ public class MainDriver {
         lunch2.prepareLunch();
         System.out.println();
 
-        
-        // iterator, composite, flyweight, state, proxy, chain of responsibility, interpreter, mediator,vistor
+        /* iterator/cursor pattern - ref from PD book;
+        • The iterator pattern allows us to access contents of a collection without exposing its internal structure of data.
+        • Supports multiple simultaneous traversals of a collection. That means we can create multiple independent iterators on same collection.
+        • Provides a uniform interface for traversing different collection.
+         * */
+        System.out.println("---behavioral.iterator---");
+        Item i1 = new Item("apple", 2.5f);
+        Item i2 = new Item("guava", 1.5f);
+        Item i3 = new Item("orange", 1.5f);
+        Menu menu = new Menu();
+        menu.addItem(i1);
+        menu.addItem(i2);
+        menu.addItem(i3);
+        Iterator iterator = menu.createIterator();
+        while (iterator.hasNext()) {
+            Item i = (Item) iterator.next();
+            System.out.println(i);
+        }
+
+        System.out.println("removing last element");
+        iterator.remove();
+        System.out.println();
+
+        System.out.println("printing after removing");
+        iterator = menu.createIterator();
+        while (iterator.hasNext()) {
+            Item i = (Item) iterator.next();
+            System.out.println(i);
+        }
+        System.out.println();
+
+
+        // composite, flyweight, state, proxy, chain of responsibility, interpreter, mediator,vistor
         // https://www.youtube.com/watch?v=wiQdrH2YpT4&list=PLF206E906175C7E07&index=5
     }
 }
